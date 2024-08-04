@@ -4,7 +4,8 @@ const { catchAsyncError } = require('../middlewares/catchAsyncError');
 const ErrorHandler = require('../middlewares/error');
 
 exports.isAuthorized = catchAsyncError(async (req, res, next) =>{
-    const {token} = req.cookies;
+    const { token } = req.cookies;
+    
     if(!token){
         return next(new ErrorHandler('User not authorized. Login before accessing this resource.', 400));
     }

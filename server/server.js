@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRouter');
 const applicationRoutes = require('./routes/applicationRouter');
 const jobRoutes = require('./routes/jobRouter'); 
 const errorMiddleware = require('./middlewares/error');
+const cookieParser = require('cookie-parser');
 dotenv.config({path: './config/config.env'});
 
 //Database connection
@@ -23,6 +24,8 @@ mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING)
 //Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+
 
 
 //Cloudinary configuration
