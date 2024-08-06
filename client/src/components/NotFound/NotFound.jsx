@@ -1,10 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const NotFound = () => {
   return (
-    <div>
-      
-    </div>
+    <section className='page notfound'>
+      <div className="content">
+
+    <img src='/notfound.png' alt='Page Not Found'/>
+    <Link to='/' >RETURN TO HOME</Link>
+      </div>
+    </section>
   )
 }
 

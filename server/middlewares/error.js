@@ -34,7 +34,7 @@ exports.errorMiddleware = (err, req, res, next) =>{
     return res.status(err.statusCode).json({
         status : 'fail',
         message : err.message
-    })
+    });
 }
 
 module.exports = ErrorHandler;

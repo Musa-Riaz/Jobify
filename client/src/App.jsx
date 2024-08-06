@@ -1,49 +1,72 @@
-import './App.css'
-import {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
-import {setUser} from './redux/slices/userSlice';
-import {setAuth} from './redux/slices/authSlice';
-import {Routes, Route} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import '../src/App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from './redux/slices/userSlice';
+import { setAuth } from './redux/slices/authSlice';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import Home from './components/Home/Home';
 import Jobs from './components/Job/Jobs';
 import JobDetails from './components/Job/JobDetails';
 import MyJobs from './components/Job/MyJobs';
-import PostJobs from './components/Job/PostJobs';
 import Application from './components/Application/Application';
-import MyApplication from './components/Application/MyApplication';
+import PostJobs from './components/Job/PostJobs';
+import MyApplications from '../src/components/Application/MyApplications';
+import Register from '../src/components/Auth/Register';
 import Login from './components/Auth/Login';
-import NotFound from './components/NotFound';
-import Register from './components/Auth/Register';
+import NotFound from '../src/components/NotFound/NotFound';
+import Spinner from '../src/components/Spinner/Spinner';
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
-
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user.user);
-  const isAuthorized = useSelector(state => state.auth.isAuthorized);
+  const { user } = useSelector((state) => state.user);
+  const isAuthorized = useSelector((state) => state.auth.isAuthorized);
+  const loading = useSelector((state) => state.alerts.loading);
+
+  const getUser = async () => {
+    try {
+      const res = await axios.get('http://localhost:4000/api/v1/user/get-user', {withCredentials: true});
+      console.log(res);
+      dispatch(setUser(res.data.user));
+      dispatch(setAuth(true));
+    } catch (err) {
+      console.log(err);
+      dispatch(setAuth(false));
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [isAuthorized]);
 
   return (
     <>
-    <Navbar />
-    <Routes>
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
-      <Route  path='/' element={<Home />}/>
-      <Route path='/job/getall' element={<Jobs />}/>
-      <Route path='/job/:id' element = {<JobDetails />}/>
-      <Route path='/job/post' element={<PostJobs />}/>
-      <Route path='/application/:id' element={<Application />}/>
-      <Route path='/application/me' element={<MyApplication />}/>
-      <Route path='/*' element={<NotFound />}/>
-    </Routes>
-     <Footer />
-     <Toaster />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Navbar />
+          <Routes>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/' element={<Home />} />
+            <Route path='/job/getall' element={<Jobs />} />
+            <Route path='/job/:id' element={<JobDetails />} />
+            <Route path='/job/post' element={<PostJobs />} />
+            <Route path = "/job/me" element = {<MyJobs />} /> 
+            <Route path='/application/:id' element={<Application />} />
+            <Route path='/application/me' element={<MyApplications />} />
+            <Route path='/*' element={<NotFound />} />
+          </Routes>
+          <Footer />
+          <Toaster />
+        </>
+      )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

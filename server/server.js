@@ -21,8 +21,16 @@ mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING)
     console.log(err)
 })
 
+
+
 //Middlewares
-app.use(cors());
+app.use(
+    cors({
+      origin: [process.env.FRONTEND_URL],
+      method: ["GET", "POST", "DELETE", "PUT"],
+      credentials: true,
+    })
+  );
 app.use(express.json());
 app.use(cookieParser());
 
