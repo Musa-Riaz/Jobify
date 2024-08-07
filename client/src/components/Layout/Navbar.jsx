@@ -50,7 +50,7 @@ const Navbar = () => {
           <li>
             <Link to="/" onClick={() => setShow(false)}>
               {" "}
-              Home{" "}
+              HOME{" "}
             </Link>
           </li>
           <li>

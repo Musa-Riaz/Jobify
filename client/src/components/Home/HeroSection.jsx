@@ -46,8 +46,10 @@ const HeroSection = () => {
           details.map((detail) => (
             <div className="card" key={detail.id}>
                 <div className="icon">{detail.icon}</div>
+                <div className="content">
                 <p>{detail.title}</p>
                 <p>{detail.subTitle}</p>
+                </div>
             </div>
           ))
         }

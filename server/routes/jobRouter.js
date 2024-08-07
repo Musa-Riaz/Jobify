@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {isAuthorized} = require('../middlewares/auth');
-const { getAllJobsController, jobPostingController, getMyJobsController, updateJobController,jobDeleteController }  = require('../controllers/jobController');
+const { getAllJobsController, jobPostingController, getMyJobsController, updateJobController,jobDeleteController, getSingleJobController }  = require('../controllers/jobController');
 
 router
 .get('/get-all-jobs', getAllJobsController );
@@ -17,5 +17,8 @@ router
 
 router
 .delete('/delete-job/:id', isAuthorized, jobDeleteController);
+
+router
+.get('/:id', getSingleJobController);
 
 module.exports = router;

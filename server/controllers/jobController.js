@@ -127,4 +127,25 @@ exports.jobDeleteController = catchAsyncError(async (req, res, next) =>{
     res.status(200).json({
         status:"success"
     });
+});
+
+
+exports.getSingleJobController = catchAsyncError( async (req, res , next) =>{
+    try{
+        const {id} = req.params;
+        const job = await jobModel.findById(id);
+        if(!job){
+            return  next (new ErrorHandler('Job not found', 404));
+        }
+        res.status(200).json({
+            status:"success",
+            job
+        
+        });
+    }
+
+    catch(err){
+        console.log(err);
+        return next (new ErrorHandler('Error in ID / Cast Error', 404));
+    }
 })
