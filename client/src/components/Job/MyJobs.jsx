@@ -14,32 +14,36 @@ const MyJobs = () => {
   const { isAuthorized } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
 
-  const dispatch = useDispatch();
 
   const getMyJobs = async () => {
     try {
-      dispatch(setLoading());
+      
       const res = await axios.get(
         "http://localhost:4000/api/v1/job/get-my-jobs",
         { withCredentials: true }
       );
-      dispatch(hideLoading());
+      
       console.log(res.data);
 
       if (res.data.status === "success") {
         setMyJobs(res.data.jobs);
+
       } else if (res.data.status === "fail") {
         message.error(res.data.message);
         message.fail(res.data.message);
         setMyJobs([]);
       }
     } catch (err) {
-      dispatch(hideLoading());
+     
       console.log(err);
       message.error("Failed to get jobs");
       setMyJobs([]);
     }
   };
+
+  useEffect(()=>{
+    getMyJobs();
+  }, [])
 
   const handleEnableEdit = (jobId) => {
     setEditingMode(jobId);
@@ -52,7 +56,7 @@ const MyJobs = () => {
   const handleUpdateJob = async (jobId) => {
     const updatedJob = myJobs.find((job) => job._id === jobId);
     const res = await axios.put(
-      `http://localhost:4000/api/v1/job/update-jpb/${jobId}`,
+      `http://localhost:4000/api/v1/job/update-job/${jobId}`,
       updatedJob,
       { withCredentials: true }
     );
@@ -67,7 +71,8 @@ const MyJobs = () => {
 
   const handleDeleteJob = async (id) => {
     try {
-      const res = await axios.get(
+    
+      const res = await axios.delete(
         `http://localhost:4000/api/v1/job/delete-job/${id}`,
         { withCredentials: true }
       );
@@ -83,13 +88,13 @@ const MyJobs = () => {
       console.log(err);
     }
   };
-
   const handleInputChange = (jobId, field, value) => {
-    setMyJobs((prevJobs) => {
-      prevJobs.map((job) => {
-        job._id === jobId ? { ...job, [field]: value } : job;
-      });
-    });
+    // Update the job object in the jobs state with the new value
+    setMyJobs((prevJobs) =>
+      prevJobs.map((job) =>
+        job._id === jobId ? { ...job, [field]: value } : job
+      )
+    );
   };
   return (
     <>
@@ -309,6 +314,17 @@ const MyJobs = () => {
                             />
                           </div>
                         </div>
+                      </div>
+                      <div className="button_wrapper">
+                        <div className="edit_btn_wrapper">
+                          {editingMode === myJob._id ? (<>
+                          <button onClick={()=> handleUpdateJob(myJob._id)} className="check_btn" style={{cursor: 'pointer'}}><FaCheck /></button>
+                          <button onClick={()=> handleDisableEdit(myJob._id)} className="check_btn" style={{cursor: 'pointer'}}><RxCross2 /></button>
+                          </>) : (<>
+                          <button onClick={() => handleEnableEdit(myJob._id)} className="edit_btn" style={{cursor: 'pointer'}}>Edit</button>
+                          </>)}
+                        </div>
+                        <button onClick={()=> handleDeleteJob(myJob._id)} className="delete_btn" style={{cursor: 'pointer'}}>Delete</button>
                       </div>
                     </div>
                   );

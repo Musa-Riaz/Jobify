@@ -33,7 +33,7 @@ exports.jobPostingController = catchAsyncError( async (req, res, next) =>{
         return next(new ErrorHandler('Please enter salary', 400));
     }
 
-    if(fixedSalary && salarFrom && salaryTo){
+    if(fixedSalary && salaryFrom && salaryTo){
         return next(new ErrorHandler('Please enter only one salary', 400));
     }
 
@@ -125,7 +125,8 @@ exports.jobDeleteController = catchAsyncError(async (req, res, next) =>{
     const {id} = req.params
     const job = await jobModel.findByIdAndDelete(id);
     res.status(200).json({
-        status:"success"
+        status:"success",
+        message: "Job deleted successfully"
     });
 });
 

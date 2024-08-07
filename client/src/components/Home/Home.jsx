@@ -8,9 +8,9 @@ import { Navigate } from 'react-router-dom'
 const Home = () => {
   const {isAuthorized} = useSelector((state) => state.auth);
 
-if(!isAuthorized){
-  return <Navigate to = "/login" />
-}
+    // if(!isAuthorized){
+    //   return <Navigate to = "/login" />
+    // }
 
   return (
     <section className='homePage page'>
