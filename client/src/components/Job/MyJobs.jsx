@@ -54,19 +54,27 @@ const MyJobs = () => {
   };
 
   const handleUpdateJob = async (jobId) => {
-    const updatedJob = myJobs.find((job) => job._id === jobId);
-    const res = await axios.put(
-      `http://localhost:4000/api/v1/job/update-job/${jobId}`,
-      updatedJob,
-      { withCredentials: true }
-    );
-    if (res.data.status === "success") {
-      message.success(res.data.message);
-      setEditingMode(null);
-      getMyJobs();
-    } else if (res.data.status === "fail") {
-      message.error(res.data.message);
+    try{
+      const updatedJob = myJobs.find((job) => job._id === jobId);
+      const res = await axios.put(
+        `http://localhost:4000/api/v1/job/update-job/${jobId}`,
+        updatedJob,
+        { withCredentials: true }
+      );
+      if (res.data.status === "success") {
+        message.success(res.data.message);
+        setEditingMode(null);
+        getMyJobs();
+      } else {
+        console.log(res.data.message);
+        message.error(res.data.message);
+      }
     }
+    catch(err){
+      console.log(err);
+      message.error("Failed to update job");
+    }
+   
   };
 
   const handleDeleteJob = async (id) => {

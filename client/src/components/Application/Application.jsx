@@ -81,7 +81,7 @@ if(!isAuthorized || (user && user.role === "Employer")){
           <input type="number" placeholder='Your Phone' value={phone} onChange = {(e) => setPhone(e.target.value)} />
           <textarea placeholder='Write a cover letter' value = {coverLetter} onChange={(e) => setCoverLetter(e.target.value)} />
           <div>
-            <label style={{textAlign:'start', display: " block ", fontSize: '20px'}}>Select Resume</label>
+            <label style={{textAlign:'start', display: " block ", fontSize: '20px'}}>Select Resume.<b>*File type must be .jpg, .png or .webp</b></label>
             <input type="file" accept='.jpg, .png, .webp' onChange={handleFileChange} style={{width: '100%'}} />
           </div>
           <button type='submit'>Send Application</button>

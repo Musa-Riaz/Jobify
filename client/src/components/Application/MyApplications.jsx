@@ -20,8 +20,9 @@ const MyApplications = () => {
 
 
   const getMyApplication = async () => {
-    try{
 
+    try{
+      
       if(user && user.role === 'Employer'){
         const res = await axios.get('http://localhost:4000/api/v1/application/get-employer-applications', {withCredentials: true});
         if(res.data.status === 'success'){
@@ -81,11 +82,17 @@ const MyApplications = () => {
 
 
   useEffect(() => {
-    if(user && isAuthorized)
-    getMyApplication();
-  }, [user]);
+    
+    if(isAuthorized){
+
+      getMyApplication();
+    }
+    
+  }, [isAuthorized]);
   return (
+    
    <>
+   
   <section className='my_applications page'>
     { user && user?.role === "Job Seeker" ? (
       <div className="container">

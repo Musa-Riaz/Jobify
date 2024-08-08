@@ -33,7 +33,6 @@ const jobSchema = new mongoose.Schema({
     address:{
         type:String,
         required: [true, 'Please enter address'],
-        minLength: [15, 'Address must be at least 15 characters long'],
 
     },
     fixedSalary:{

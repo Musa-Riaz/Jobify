@@ -51,6 +51,7 @@ const Register = () => {
         setRole("");
         dispatch(setAuth(true));
         navigate('/')
+        
       }
       else if(res.data.status === 'fail') {
         console.log(res.data.message);

@@ -23,12 +23,12 @@ const Navbar = () => {
       console.log("Logout response:", res); // Log response for debugging
       
       if(res.data.status === 'success'){
-
+        navigate("/login");
         dispatch(setAuth(false));
         dispatch(setUser({}));
         
         message.success("Successfully logged out");
-        navigate("/login");
+       
       }
     } catch (err) {
       console.log("Logout error:", err); // Log error for debugging

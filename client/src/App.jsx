@@ -38,8 +38,9 @@ function App() {
   };
 
   useEffect(() => {
+    
     getUser();
-  }, []);
+  }, [isAuthorized]);
 
   return (
     <>
