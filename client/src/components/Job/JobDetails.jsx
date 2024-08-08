@@ -54,7 +54,7 @@ const JobDetails = () => {
             <p>Description: <span>{job.description}</span></p>
             <p>Job PostedOn: <span>{job.jobPostedOn}</span></p>
             <p>{job.fixedSalary ? (<span>{job.fixedSalary}</span>) : (<span>{job.salaryFrom} - <span>{job.salaryTo}</span></span>)}</p>
-            <p>{user && user.role === "Employer" ? <></> : (<Link to = {`application/${job._id}`} >Apply Now</Link>)}</p>
+            <p>{user && user.role === "Employer" ? <></> : (<Link to = {`/application/${job._id}`} >Apply Now</Link>)}</p>
           </div>
         </div>
       </div>

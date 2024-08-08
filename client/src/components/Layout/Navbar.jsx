@@ -26,6 +26,7 @@ const Navbar = () => {
 
         dispatch(setAuth(false));
         dispatch(setUser({}));
+        
         message.success("Successfully logged out");
         navigate("/login");
       }

@@ -29,7 +29,6 @@ function App() {
   const getUser = async () => {
     try {
       const res = await axios.get('http://localhost:4000/api/v1/user/get-user', {withCredentials: true});
-      console.log(res);
       dispatch(setUser(res.data.user));
       dispatch(setAuth(true));
     } catch (err) {
@@ -40,7 +39,7 @@ function App() {
 
   useEffect(() => {
     getUser();
-  }, [isAuthorized]);
+  }, []);
 
   return (
     <>
@@ -51,7 +50,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route  path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
+            <Route  path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/job/getall' element={<Jobs />} />
             <Route path='/job/:id' element={<JobDetails />} />

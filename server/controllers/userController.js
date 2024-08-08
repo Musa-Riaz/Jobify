@@ -49,7 +49,7 @@ exports.loginUserController = catchAsyncError(async (req, res, next) =>{
 
 
 exports.logoutController = catchAsyncError(async (req, res, next) => {
-    res.cookie('token', null, {
+    res.cookie('token', "", {
         expires: new Date(Date.now()),
         httpOnly: true
     }).json({
@@ -58,7 +58,7 @@ exports.logoutController = catchAsyncError(async (req, res, next) => {
 
     });
 
-    next();
+    
 
 });
 
@@ -68,5 +68,5 @@ exports.getUserController = catchAsyncError(async (req, res, next) =>{
     res.status(200).json({
         status: 'success',
         user
-    })
-})
+    });
+});
